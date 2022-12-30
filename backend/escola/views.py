@@ -1,6 +1,8 @@
 from rest_framework import viewsets, generics
+from escola.helper import add_header_location
 from escola.serializer import AlunoSerializerV2
 from escola.models import Aluno, Curso, Matricula
+
 from escola.serializer import (
     AlunoSerializer,
     CursoSerializer,
@@ -20,12 +22,21 @@ class AlunosViewSet(viewsets.ModelViewSet):
             return AlunoSerializerV2
         return AlunoSerializer
 
+    def create(self, request):
+        serializer_class = self.get_serializer_class()
+        serializer = serializer_class(data=request.data)
+        return add_header_location(serializer, request)
+
 
 class CursosViewSet(viewsets.ModelViewSet):
     """Exibindo todos os cursos"""
 
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
+
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        return add_header_location(serializer, request)
 
 
 class MatriculaViewSet(viewsets.ModelViewSet):
@@ -34,6 +45,10 @@ class MatriculaViewSet(viewsets.ModelViewSet):
     queryset = Matricula.objects.all()
     serializer_class = MatriculaSerializer
     http_method_names = ["get", "post", "put", "path"]
+
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        return add_header_location(serializer, request)
 
 
 class ListaMatriculasAluno(generics.ListAPIView):
