@@ -33,6 +33,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -46,6 +47,6 @@
 
 .Footer {
   margin-top: 10%;
-  color:#074657;
+  color: #074657;
   background-color: aliceblue;
 }
