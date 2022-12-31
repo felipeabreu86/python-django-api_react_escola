@@ -2,7 +2,8 @@ from rest_framework import viewsets, generics
 from escola.helper import add_header_location
 from escola.serializer import AlunoSerializerV2
 from escola.models import Aluno, Curso, Matricula
-
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from escola.serializer import (
     AlunoSerializer,
     CursoSerializer,
@@ -49,6 +50,10 @@ class MatriculaViewSet(viewsets.ModelViewSet):
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
         return add_header_location(serializer, request)
+
+    @method_decorator(cache_page(20))
+    def dispatch(self, *args, **kwargs):
+        return super(MatriculaViewSet, self).dispatch(*args, **kwargs)
 
 
 class ListaMatriculasAluno(generics.ListAPIView):
