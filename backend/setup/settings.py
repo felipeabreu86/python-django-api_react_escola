@@ -71,6 +71,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.i18n",
             ],
         },
     },
@@ -162,16 +163,16 @@ REST_FRAMEWORK = {
 
 
 # Internacionalização
-
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, "locale/"),
-]
-
-TEMPLATE_CONTEXT_PROCESSORS = ("django.template.context_processors.i18n",)
+# manage makemessages -l pt_br
+# manage compilemessages
 
 from django.utils.translation import gettext_lazy as _
 
 LANGUAGES = [
     ("pt-br", _("Português")),
     ("en", _("English")),
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, "locale/"),
 ]
