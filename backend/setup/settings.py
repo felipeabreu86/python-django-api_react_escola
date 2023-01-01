@@ -49,13 +49,13 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "setup.urls"
@@ -151,3 +151,18 @@ REST_FRAMEWORK = {
         "user": "100/day",
     },
 }
+
+# Internacionalização
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, "locale/"),
+]
+
+TEMPLATE_CONTEXT_PROCESSORS = ("django.template.context_processors.i18n",)
+
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGES = [
+    ("pt_BR", _("Português")),
+    ("en", _("English")),
+]
