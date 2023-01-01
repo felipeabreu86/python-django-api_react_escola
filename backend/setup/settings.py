@@ -150,7 +150,16 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {
         "user": "100/day",
     },
+    # "DEFAULT_PARSER_CLASSES": [
+    #     "rest_framework.parsers.JSONParser",
+    #     "rest_framework_xml.parsers.XMLParser",
+    # ],
+    # "DEFAULT_RENDERER_CLASSES": [
+    #     "rest_framework.renderers.JSONRenderer",
+    #     "rest_framework_xml.renderers.XMLRenderer",
+    # ],
 }
+
 
 # Internacionalização
 
@@ -163,6 +172,6 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.template.context_processors.i18n",)
 from django.utils.translation import gettext_lazy as _
 
 LANGUAGES = [
-    ("pt_BR", _("Português")),
+    ("pt-br", _("Português")),
     ("en", _("English")),
 ]
