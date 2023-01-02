@@ -1,7 +1,5 @@
-from django.http import response
 from rest_framework.test import APITestCase
 from escola.models import Curso
-from django.urls import reverse
 from rest_framework import status
 
 
