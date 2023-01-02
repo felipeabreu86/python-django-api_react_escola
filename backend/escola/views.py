@@ -17,6 +17,7 @@ class AlunosViewSet(viewsets.ModelViewSet):
     """Exibindo todos os alunos e alunas"""
 
     queryset = Aluno.objects.all()
+    http_method_names = ["get", "post", "put", "path", "delete"]
 
     def get_serializer_class(self):
         if str(self.request.version).upper() == "V2":
