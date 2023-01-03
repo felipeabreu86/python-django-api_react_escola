@@ -5,6 +5,7 @@ from rest_framework import status
 
 class CursosTestCase(APITestCase):
     def setUp(self):
+        """Configura os detalhes iniciais para os testes serem executados"""
         self.curso_1 = Curso.objects.create(
             codigo_curso="CTT1",
             descricao="Curso teste 1",
@@ -16,11 +17,15 @@ class CursosTestCase(APITestCase):
             nivel="A",
         )
 
+    ### Testes Requisições GET
+
     def test_requisicao_get_para_listar_cursos(self):
         """Teste para verificar a requisição GET para listar os cursos"""
         response = self.client.get("/cursos/")
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(2, len(response.data))
+
+    ### Testes Requisições POST
 
     def test_requisicao_post_para_criar_curso(self):
         """Teste para verificar a requisição POST para criar um curso"""
@@ -41,10 +46,14 @@ class CursosTestCase(APITestCase):
             },
         )
 
+    ### Testes Requisições DELETE
+
     def test_requisicao_delete_para_deletar_curso(self):
         """Teste para verificar a requisição DELETE não permitida para deletar um curso"""
         response = self.client.delete("/cursos/1/")
         self.assertEquals(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    ### Testes Requisições PUT
 
     def test_requisicao_put_para_atualizar_curso(self):
         """Teste para verificar a requisição PUT para atualizar um curso"""

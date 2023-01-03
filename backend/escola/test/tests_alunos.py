@@ -25,7 +25,12 @@ class AlunosV1TestCase(APITestCase):
 
     @classmethod
     def tearDownClass(cls):
-        # Deleta o diretório temporário das imagens geradas para os testes
+        """Método de classe chamado depois da execução dos testes"""
+        cls._apagar_diretorio_temp_fotos()
+
+    @classmethod
+    def _apagar_diretorio_temp_fotos(cls):
+        """Deleta o diretório temporário das imagens geradas para os testes"""
         shutil.rmtree(MEDIA_ROOT, ignore_errors=True)
         super().tearDownClass()
 
@@ -45,11 +50,15 @@ class AlunosV1TestCase(APITestCase):
             data_nascimento="1980-02-02",
         )
 
+    ### Testes Requisições GET
+
     def test_requisicao_get_para_obter_todos_alunos(self):
         """Teste para verificar a requisição GET para listar os alunos"""
         response = self.client.get("/alunos/?version=v1")
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(2, len(response.data))
+
+    ### Testes Requisições POST
 
     def test_requisicao_post_para_criar_aluno_com_foto(self):
         """Teste para verificar a requisição POST para criar um aluno com foto"""
@@ -62,6 +71,7 @@ class AlunosV1TestCase(APITestCase):
         }
         response = self.client.post("/alunos/", data=data)
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(str(response.data["foto"]).startswith("/media/test"))
 
     def test_requisicao_post_para_criar_aluno_sem_foto(self):
         """Teste para verificar a requisição POST para criar um aluno sem foto"""
@@ -73,3 +83,11 @@ class AlunosV1TestCase(APITestCase):
         }
         response = self.client.post("/alunos/", data=data)
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+        self.assertEquals(response.data["foto"], None)
+
+    ### Testes Requisições DELETE
+
+    def test_requisicao_delete_para_deletar_aluno(self):
+        """Teste para verificar a requisição DELETE para deletar um alunno"""
+        response = self.client.delete("/alunos/1/")
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
